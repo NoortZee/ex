@@ -1,0 +1,16 @@
+<form>
+    <label for="services">Выберите услугу:</label>
+    <select id="services" name="services" onchange="if(this.value == '2') alert('Соска');">
+        <option value="" disabled selected>-- Сделайте выбор --</option>
+        <option value="1">Услуга 1</option>
+        <option value="2">Услуга 2</option>
+        <option value="3">Услуга 3</option>
+        <option value="4">Услуга 4</option>
+        <option value="5">Услуга 5</option>
+        <option value="6">Услуга 6</option>
+        <option value="7">Услуга 7</option>
+        <option value="8">Услуга 8</option>
+        <option value="9">Услуга 9</option>
+        <option value="10">Услуга 10</option>
+    </select>
+</form>
