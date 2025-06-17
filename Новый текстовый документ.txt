@@ -1,0 +1,56 @@
+Если вам нужно изменить поля формы заявки в уже работающем Laravel-проекте, вот пошаговый процесс:
+
+1. Изменение миграции базы данных
+Если нужно добавить/изменить поля в таблице:
+
+bash
+php artisan make:migration add_new_fields_to_applications_table --table=applications
+В созданной миграции (в database/migrations) добавьте нужные поля:
+
+php
+public function up()
+{
+    Schema::table('applications', function (Blueprint $table) {
+        $table->string('new_field')->nullable(); // пример нового поля
+        $table->string('existing_field')->change(); // пример изменения существующего
+    });
+}
+Затем выполните миграцию:
+
+bash
+php artisan migrate
+2. Обновление модели
+В модели Application (обычно app/Models/Application.php) добавьте новые поля в $fillable:
+
+php
+protected $fillable = [
+    // существующие поля
+    'new_field',
+];
+3. Обновление контроллера
+В контроллере, обрабатывающем заявки (обычно app/Http/Controllers/ApplicationController.php), обновите методы store и update:
+
+php
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'new_field' => 'required|string|max:255',
+        // другие правила валидации
+    ]);
+    
+    Application::create($validated);
+    // ...
+}
+4. Обновление формы
+В blade-шаблоне формы (resources/views/applications/create.blade.php или подобном) добавьте новые поля:
+
+php
+<div class="form-group">
+    <label for="new_field">Новое поле</label>
+    <input type="text" name="new_field" id="new_field" class="form-control">
+</div>
+5. Обновление валидации
+Если нужно изменить правила валидации, обновите их в контроллере или в FormRequest (если используется).
+
+6. Обновление отображения
+В шаблонах отображения заявки (resources/views/applications/show.blade.php, index.blade.php) добавьте отображение новых полей.
